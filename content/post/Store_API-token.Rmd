@@ -1,7 +1,7 @@
 ---
-title: "Using API to get data"
+title: "Using AGROMET API to get weather data"
 author: "Loïc Davadan"
-date: 2015-07-23
+date: 2018-05-30
 output: html_document
 ---
 
@@ -12,18 +12,18 @@ Storing the API key in a script enables to call it in other commands to modify t
 
 ## Creation of the user on the API
 
-Depending on the API, create a new user will request different informations as the name and the password. However, the API will generate a token for every user.
+Create a new user on the API will request different informations as the name and the password. Then, the API will generate a token for every user.
 
 ## Storage of the token in a environment variable
 
 Create a text file named ".Renviron" in your Home folder. This file is a R config file.
 
 Copy this key in a new variable :
-`NAME_TOKEN = your_token`
+`AGROMET_TOKEN = your_token`
 
 # Get data from the AGROMET API
 
-Store in a variable `records.df` the result of the fonction `get_from_agromet_API.fun(user_token.chr, table_name.chr, sensors.chr=NULL, stations_ids.chr, dfrom.chr, dto.chr)` où :
+Store in a variable `records.df` the result of the fonction `get_from_agromet_API.fun(user_token.chr, table_name.chr, sensors.chr=NULL, stations_ids.chr, dfrom.chr, dto.chr)` where :
 
 * `user_token.chr`  
 

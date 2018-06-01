@@ -3,15 +3,7 @@ title: "About"
 date: "2016-05-05T21:48:51-07:00"
 ---
 
+Welcome to my personal blog made for my internship in CRA-W.
 
-# Personal informations
+I'm a student from _Bordeaux Sciences Agro_ and I'm doing an internship in the Walloon agricultural centre of research. I participate in the AGROMET project which aims to provide a near real-time hourly gridded datasets of weather parameters at the resolution of 1 km² for the whole region of Wallonia characterized by a quality indicator.
 
-Mail : loic.davadan@agro-bordeaux.fr
-Phone : +336 89 93 80 94
-Adress : 11 rue de la Gare 70100 Mantoche, France
-
-# Education
-
-## _Ecole Nationale Supérieure des Sciences Agronomiques de Bordeaux Aquitaine (Bordeaux Sciences Agro)_
-A university-level agricultural institute awarding 5-year degree equivalent to Master of Science ; competitive examination for admission
-Bordeaux, France

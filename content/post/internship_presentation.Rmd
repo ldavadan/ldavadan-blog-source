@@ -5,7 +5,7 @@ date: 2015-07-23
 output: html_document
 ---
 
-In the course of my studies in _Bordeaux Sciences Agro_, I realised a 3-month internship. This internship took place in the Walloon agricultural research center (CRA-W)) from May 22nd to August 20th 2018. I made a contribution to the AGROMET project in Farming Systems, Territory and Information Technologies Unit.
+In the course of my studies in _Bordeaux Sciences Agro_, I realised a 3-month internship. This internship took place in the Walloon agricultural research centre (CRA-W)) from May 22nd to August 20th 2018. I made a contribution to the AGROMET project in Farming Systems, Territory and Information Technologies Unit.
 The aim of the Agromet project is to provide a near real-time hourly gridded datasets of weather parameters at the resolution of 1 km² for the whole region of Wallonia characterized by a quality indicator.
 My role in the project was to implement some spatialization methods for meteorological data. In particular, I used multiple linear regression to build a model which predict temperature from explanatory variables. The performance of the model has been evaluated through statistical tests.
 
@@ -22,17 +22,25 @@ The project aims to set up an operational web-platform designed for real-time ag
 These "spatialized" data will be made available through a web-platform providing interactive visualization widgets (maps, charts, tables and various indicators) and an API allowing their use on the fly, notably by agricultural warning systems providers. An extensive and precise documentation about data origin, geo-statistic algorithms used and uncertainty will also be available.
 
 Meteorological data wanted to be predict are : 
+
 * Temperature (1.5m above the ground)
+
 * Relative humidity (1.5m above the ground)
+
 * Leaves wetness
+
 Rainfall will be spatialized from RMI rain radar data.
 
 To predict these variables, known data are used :
+
 * Digital elevation model and its derivatives like aspect and slope
+
 * Solar irradiance
+
 * Other variables discussed to improve the prediction : distance to sea, CORINE land cover...
 
 ![Agromet](/post/internship_presentation_files/SchémaAgromet_1.jpg){width=80%}
+
 
 ## Objectives of the internship
 

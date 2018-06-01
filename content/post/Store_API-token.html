@@ -1,7 +1,7 @@
 ---
-title: "Using API to get data"
+title: "Using AGROMET API to get weather data"
 author: "Loïc Davadan"
-date: 2015-07-23
+date: 2018-05-30
 output: html_document
 ---
 
@@ -12,17 +12,17 @@ output: html_document
 <h1>Storage of the API key</h1>
 <div id="creation-of-the-user-on-the-api" class="section level2">
 <h2>Creation of the user on the API</h2>
-<p>Depending on the API, create a new user will request different informations as the name and the password. However, the API will generate a token for every user.</p>
+<p>Create a new user on the API will request different informations as the name and the password. Then, the API will generate a token for every user.</p>
 </div>
 <div id="storage-of-the-token-in-a-environment-variable" class="section level2">
 <h2>Storage of the token in a environment variable</h2>
 <p>Create a text file named “.Renviron” in your Home folder. This file is a R config file.</p>
-<p>Copy this key in a new variable : <code>NAME_TOKEN = your_token</code></p>
+<p>Copy this key in a new variable : <code>AGROMET_TOKEN = your_token</code></p>
 </div>
 </div>
 <div id="get-data-from-the-agromet-api" class="section level1">
 <h1>Get data from the AGROMET API</h1>
-<p>Store in a variable <code>records.df</code> the result of the fonction <code>get_from_agromet_API.fun(user_token.chr, table_name.chr, sensors.chr=NULL, stations_ids.chr, dfrom.chr, dto.chr)</code> où :</p>
+<p>Store in a variable <code>records.df</code> the result of the fonction <code>get_from_agromet_API.fun(user_token.chr, table_name.chr, sensors.chr=NULL, stations_ids.chr, dfrom.chr, dto.chr)</code> where :</p>
 <ul>
 <li><code>user_token.chr</code></li>
 </ul>
