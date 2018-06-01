@@ -105,8 +105,8 @@ plot
 
 ## Export the result
 
-Finally, we can export the result as CSV file. In that way, people using this file will be able to to other calculs on it.
+Finally, we can export the result as [CSV file](/post/load_data_frasnes_hra_files/records_Esplechin_2010-2015.csv). In that way, people using this file will be able to to other calculs on it.
 ```{r eval = FALSE}
-write.csv(records.day.df, file = "records_Esplechin_2010-2015.csv")
+write.csv(records.day.df, file = "../../static/post/load_data_frasnes_hra_files/records_Esplechin_2010-2015.csv")
 ```
 
