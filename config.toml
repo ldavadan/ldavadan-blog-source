@@ -7,7 +7,8 @@ googleAnalytics = ""          # Google Analytics UA number
 [params]
   subtitle = "Personal website for my internship"
   author = "Loïc Davadan"
-  description = "This website was developed as a logbook to keep tracks fof my work"
+  logo = ""
+  description = "Logbook for my intership"
   paginate = 10
 
   # Publisher
@@ -16,7 +17,7 @@ googleAnalytics = ""          # Google Analytics UA number
   adsenseSlotSticky = ""             # Enables sticky ads feature, value maybe the same with adsenseSlot, remove if you don't want display sticky ads
 
   # SEO configs
-  seotitle = "Personal website of Loïc Davadan (SEO Version)"
+  seotitle = "Personal website (SEO Version)"
   googleSiteVerification = ""    # Google Webmaster
   msValidate = ""                  # Bing Webmaster
 
