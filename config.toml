@@ -1,40 +1,47 @@
-baseurl = "/"
-relativeurls = true
+baseURL = "http://localhost:1313/"
 languageCode = "en-us"
 title = "Personal website of Loïc Davadan"
-theme = "hugo-lithium"
-googleAnalytics = ""
-disqusShortname = ""
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
-
-[permalinks]
-    post = "/:year/:month/:day/:slug/"
-
-[[menu.main]]
-    name = "About"
-    url = "/about/"
-[[menu.main]]
-    name = "GitHub"
-    url = "https://github.com/ldavadan"
-[[menu.main]]
-    name = "LinkedIn"
-    url = "https://www.linkedin.com/in/loïc-davadan-886b00145"
+theme = "hugo-lamp"
+googleAnalytics = ""          # Google Analytics UA number
 
 [params]
-    description = "A website built through Hugo and blogdown."
+  subtitle = "Personal website for my internship"
+  author = "Loïc Davadan"
+  logo = ""
+  description = "This website was developed as a logbook to keep tracks fof my work"
+  paginate = 10
 
-    # options for highlight.js (version, additional languages, and theme)
-    highlightjsVersion = "9.11.0"
-    highlightjsCDN = "//cdn.bootcss.com"
-    highlightjsLang = ["r", "yaml"]
-    highlightjsTheme = "github"
+  # Publisher
+  ## adsensePublisher = ""    # Required if you want to include Google Adsense
+  adsenseSlot = ""                   # Required slot to display ads
+  adsenseSlotSticky = ""             # Enables sticky ads feature, value maybe the same with adsenseSlot, remove if you don't want display sticky ads
 
-    MathJaxCDN = "//cdn.bootcss.com"
-    MathJaxVersion = "2.7.1"
+  # SEO configs
+  seotitle = "Personal website of Loïc Davadan (SEO Version)"
+  googleSiteVerification = ""    # Google Webmaster
+  msValidate = ""                  # Bing Webmaster
 
-    [params.logo]
-    url = "logo.png"
-    width = 50
-    height = 50
-    alt = "Logo"
+  # Social networks
+  email = "loic.davadan@agro-bordeaux.fr"
+  github = "https://github.com/ldavadan"
+  linkedin = "www.linkedin.com/in/loïc-davadan-886b00145"
 
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[[menu.main]]
+  name = "Posts"
+  weight = 1
+  identifier = "posts"
+  url = "/posts/"
+[[menu.main]]
+  name = "About"
+  weight = 2
+  identifier = "about"
+  url = "/about/"
+[[menu.main]]
+  name = "Tags"
+  weight = 3
+  identifier = "tags"
+  url = "/tags/"
