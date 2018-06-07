@@ -7,7 +7,6 @@ googleAnalytics = ""          # Google Analytics UA number
 [params]
   subtitle = "Personal website for my internship"
   author = "Loïc Davadan"
-  logo = ""
   description = "This website was developed as a logbook to keep tracks fof my work"
   paginate = 10
 
