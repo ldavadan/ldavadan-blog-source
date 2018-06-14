@@ -1,0 +1,88 @@
+---
+title: "How to get CORINE land cover data from Wallonia"
+author: "Loïc Davadan"
+date: 2018-06-08
+output: html_document
+---
+
+
+
+<p>The objective of the AGROMET project is to provide hourly 1km² gridded datasets of weather parameters with the best accuracy (i.e. spatialize hourly records from the stations on the whole area of Wallonia). Weather parameters will be predicted with explanatory variables. These explanatory variables are :</p>
+<ul>
+<li><p>Digital elevation model and its derivatives like aspect and slope</p></li>
+<li><p>Solar irradiance</p></li>
+</ul>
+<p>But other explanatory variables are discussed to be included in models. For example, CORINE land cover could be a great explanatory variables. Indeed, urban areas or agricultural areas could have an influence on weather parameters.</p>
+<p>To include CORINE land cover data in models, we need to find them on the Internet and then, handle them in R.</p>
+<div id="get-corine-land-cover-data-on-the-internet" class="section level1">
+<h1>Get CORINE land cover data on the Internet</h1>
+<p>CORINE land cover data are available for Europe, they are compile in large files with raster or vector format. They can be found on <a href="https://land.copernicus.eu/pan-european/corine-land-cover">Copernicus</a> (the European Union’s Earth Observation Programme). Their vector files are very large because they are databases.</p>
+<p>However, we only need data from Wallonia. The research can be done on CORINE land cover data for Belgium. The <a href="https://www.geo.be/#!/home">Geoportal of the federal state of Belgium</a> is a great source of informations and CORINE land cover data are available.</p>
+<p>The CORINE land cover for 2012 is available as <a href="https://ac.ngi.be/client-open/XxyX5iFmfwldPgOfzIds?language=en&amp;openpath=ngi-standard-open%2FVectordata%2FCLC2012%2FCLC12_BE_shp_L08.zip&amp;tab=dataaccess&amp;auth=false&amp;open=true&amp;accesscode=XxyX5iFmfwldPgOfzIds">CLC_BE_shp_L08.zip</a> with the shapefile format.</p>
+<p>Then, you can use it in R.</p>
+</div>
+<div id="preparing-the-integration-of-corine-land-cover-data-in-models" class="section level1">
+<h1>Preparing the integration of CORINE land cover data in models</h1>
+<div id="reading-shapefile-in-r" class="section level2">
+<h2>Reading shapefile in R</h2>
+<p>R can read shapefile thanks to <code>maptools</code> package which depends on <code>sp</code> package.</p>
+<pre class="r"><code># Download shapefile
+# Warning : go to https://ac.ngi.be/client-open/vndl5zdmH4wgScjyTVdS?language=en&amp;openpath=ngi-standard-open%2FVectordata%2FCLC2012%2FCLC12_BE_shp_L08.zip&amp;tab=dataaccess&amp;auth=false&amp;open=true&amp;accesscode=vndl5zdmH4wgScjyTVdS
+# and accept the conditions and then, download the file CLC12_BE.zip and unzip it in a folder
+library(maptools)
+corine.sp &lt;- readShapePoly(&quot;../data/CLC12_BE.shp&quot;)</code></pre>
+<p>The shapefile will be loaded as a Large SpatialPolygonsDataFrame.</p>
+</div>
+<div id="clipping-the-shapefile-to-wallonia-limits" class="section level2">
+<h2>Clipping the shapefile to Wallonia limits</h2>
+<p>The data frame has data from all Belgium but we only want data from Wallonia. As a consequence, we need to clip the file.</p>
+<p>To do that, we get a file with limits of Wallonia and we use it to delete data beyond the limits. Then, you have a lighter SpatialPolygonsDataFrame.</p>
+<pre class="r"><code>library(raster)
+load(&quot;~/Documents/code/agromet-tests/data-raw/wallonie.3812.sp&quot;)
+corine.wal.sp &lt;- crop(corine.sp, wallonie.3812.sp)</code></pre>
+</div>
+<div id="loading-the-legend-and-analyzing-it" class="section level2">
+<h2>Loading the legend and analyzing it</h2>
+<p>The shapefile has a legend with different codes. There are 47 labels corresponding to different type of land covering like urban areas or agricultural areas. Only 26 of them are in Wallonia.</p>
+<p>This legend is available <a href="http://www.eea.europa.eu/data-and-maps/data/corine-land-cover-2006-raster-1/corine-land-cover-classes-and/clc_legend.csv/at_download/file">here</a>.</p>
+<pre class="r"><code># Download legend
+download.file(&quot;http://www.eea.europa.eu/data-and-maps/data/corine-land-cover-2006-raster-1/corine-land-cover-classes-and/clc_legend.csv/at_download/file&quot;,
+              destfile = &quot;../data/clc_legend.csv&quot;)
+legend &lt;- read.csv(file = &quot;../data/clc_legend.csv&quot;, header = TRUE, sep = &quot;;&quot;)
+# Legend codes for Wallonia
+legend.code.wal &lt;- data.frame(unique(corine.wal.sp$code_12))
+# Legend for CORINE land cover in Wallonia
+legend.wal &lt;- subset(legend, CLC_CODE %in% legend.code.wal$unique.corine.wal.sp.code_12.)
+legend.wal</code></pre>
+<p>Now we have the different land covers. We can group some of them if they are the same influence on weather parameters.</p>
+<p>We decided to create 5 groups :</p>
+<ul>
+<li><p><em>Artificial areas</em> : it concerns fabrics, airports, urban areas, dump sites, extraction sites… where vegetation is insignificant and shade is prevalent.</p></li>
+<li><p><em>Agricultural areas</em> : it concerns crops, arable lands…</p></li>
+<li><p><em>Herbaceous vegetation</em> : pastures, natural grasslands, moors and heathlands</p></li>
+<li><p><em>Forest</em> : it concerns all the forests (coniferous, broad-leaved, mixed) and shrubs. They are a large source of shade that could influence weather parameters like temperature.</p></li>
+<li><p><em>Water</em> : it concerns water bodies and wetlands…</p></li>
+<li><p><em>Road/Rail</em> : road and rail networks. They could influence temperature because bitumen and metal could warm up the ambient air.</p></li>
+</ul>
+<p>These groups corresponds to 6 influences that we estimated different. Our first tests will run with them but it is possible that we change our groupes later to adapt them to improve our models.</p>
+</div>
+<div id="identifying-land-covers-near-to-each-pameseb-stations" class="section level2">
+<h2>Identifying land covers near to each PAMESEB stations</h2>
+<p>Measures of PAMESEB stations could be influenced by land cover. That’s why we need to identify the environment of each station.</p>
+<p>First, we get data from the position of every station in Lambert Belgium 2008 CRS.</p>
+<pre class="r"><code>stations.sp &lt;- build_agromet_stations_points.sp.fun()
+stations.sp &lt;- spTransform(stations.sp, CRSobj = &quot;+proj=lcc +lat_1=49.83333333333334 +lat_2=51.16666666666666 +lat_0=50.797815 +lon_0=4.359215833333333 +x_0=649328 +y_0=665262 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs&quot;)
+stations.sf &lt;- st_as_sf(stations.sp)</code></pre>
+<p>Then, we make a buffer around stations and we cross-reference data from CLC and stations. The distance of the buffer will be changed later to estimate the better distance for our models.</p>
+<pre class="r"><code># Make a buffer around stations
+# https://gis.stackexchange.com/questions/229453/create-a-circle-of-defined-radius-around-a-point-and-then-find-the-overlapping-a
+# https://stackoverflow.com/questions/46704878/circle-around-a-geographic-point-with-st-buffer
+stations.buff.sf &lt;- st_buffer(x = stations.sf, dist = dist.num)
+  
+# Cross-reference data to find the different land covers in the buffer
+st_crs(corine.wal.simple.sf) &lt;- st_crs(stations.buff.sf)
+class.buff.stations.sf &lt;- st_intersection(corine.wal.simple.sf, stations.buff.sf)</code></pre>
+<p>Then, we calculate the prevalence of every land cover around each station.</p>
+<p>This work gave me an exercise to fix a problem in my code, I refer you to <a href="https://ldavadan.github.io/post/">this post</a></p>
+</div>
+</div>

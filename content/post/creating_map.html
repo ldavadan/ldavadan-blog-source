@@ -8,7 +8,7 @@ output: html_document
 
 
 <p>One of the objectives of the AGROMET project is to make maps to view spatialized data. That’s why I tried to create a template map to view the different tests of spatialization.</p>
-<p>To do that, I used data from the <a href="https://ldavadan.github.io/2018/05/30/using-agromet-api-to-get-weather-data/">AGROMET API</a> using methods I have already detailed before.</p>
+<p>To do that, I used data from the <a href="https://ldavadan.github.io/post/using-agromet-api-to-get-weather-data/">AGROMET API</a> using methods I have already detailed before.</p>
 <div id="get-map-of-wallonia" class="section level1">
 <h1>Get map of Wallonia</h1>
 <p>Source : <a href="https://www.gis-blog.com/r-raster-data-acquisition/">Raster data acquisition</a></p>
@@ -37,7 +37,9 @@ output: html_document
   
   library(tmap)
 
-  load(&quot;~/Documents/code/test/api_test/wallonie.3812.sp&quot;)
+  be.sp &lt;- getData(&#39;GADM&#39;, country = &#39;BE&#39;, level = 1, download = TRUE)
+  wallonie.sp &lt;- be.sp[be.sp$NAME_1 == &quot;Wallonie&quot;,]
+  wallonie.3812.sp &lt;- spTransform(wallonie.sp, CRS(projargs = dplyr::filter(rgdal::make_EPSG(), code == &quot;3812&quot;)$prj4))
   file &lt;- &quot;../../data/craw.png&quot;
   
   static &lt;- tm_shape(spatial_data.sp, projection=&quot;3812&quot;) +            # Projection : Belgian Lambert
