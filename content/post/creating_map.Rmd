@@ -31,7 +31,7 @@ load("~/Documents/code/test/api_test/gridded.3812.sp")
 
 One of the objectives of the AGROMET project is to make maps to view spatialized data. That's why I tried to create a template map to view the different tests of spatialization.
 
-To do that, I used data from the [AGROMET API](https://ldavadan.github.io/2018/05/30/using-agromet-api-to-get-weather-data/) using methods I have already detailed before.
+To do that, I used data from the [AGROMET API](https://ldavadan.github.io/post/using-agromet-api-to-get-weather-data/) using methods I have already detailed before.
 
 
 
