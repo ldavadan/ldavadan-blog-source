@@ -1,4 +1,5 @@
 baseURL = "http://localhost:1313/"
+relativeurls = true
 languageCode = "en-us"
 title = "Personal website of Loïc Davadan"
 theme = "hugo-lamp"
