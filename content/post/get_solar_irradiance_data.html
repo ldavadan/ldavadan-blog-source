@@ -1,0 +1,30 @@
+---
+title: "Get solar irradiance data from Wallonia"
+author: "Loïc Davadan"
+date: 2018-06-20
+output: html_document
+---
+
+
+
+<p>Solar irradiance is a parameter of interest for building models to predict weather parameters like temperature. That’s why we need to access to these data and prepare them to be included in the models.</p>
+<div id="get-data" class="section level1">
+<h1>Get data</h1>
+<p>To obtain solar irradiance data from Wallonia, those have been included in the AGROMET API. Then, a request can be done to load data that we want. These data are recently available on the API, from June 09th.</p>
+<p>The request returns a <a href="https://stackoverflow.com/questions/383692/what-is-json-and-why-would-i-use-it">JSON</a> (JavaScript Object Notation) file. This file is built on two structures : a collection of name/value pairs and an ordered list of values.</p>
+<p>The JSON file can be read on R, with the package <code>jsonlite</code> for example. It is presented like a Large List. For the project, a list is not very convenient. It is better to work with data frame.</p>
+</div>
+<div id="prepare-data" class="section level1">
+<h1>Prepare data</h1>
+<div id="understanding-the-structure-of-a-json-file" class="section level2">
+<h2>Understanding the structure of a JSON file</h2>
+<p>JSON files are considered as a list in R. They have customizable informations like its version or its terms of service and features.</p>
+<p>These features have informations about data like their type, their geometry and coordinates and their properties which contain measures. In that way, the JSON file is a list of lists and some of these lists are data frames. It is important to sort all data we need, especially considering they can be stored at differents locations in the file.</p>
+</div>
+<div id="manipulating-solar-irradiance-data" class="section level2">
+<h2>Manipulating solar irradiance data</h2>
+<p>In the case of the JSON file for solar irradiance data, I wanted to have data about the measures and their dates but also about the location of each measures. But they were stored at different locations and with different formats.</p>
+<p>The solution I used was to make loops in my code to group data. In fact, I created new columns in my data frames containing measures of solar irradiance where I put the coordinates of the stations which took measures. Then, I could create a data frame with all the hourly measures in Wallonia during a defined period.</p>
+<p>Finally, I could convert my data frame to a simple feature <code>sf</code> to observe data on a map. There are 875 points where measures are made, spread out all Wallonia.</p>
+</div>
+</div>
