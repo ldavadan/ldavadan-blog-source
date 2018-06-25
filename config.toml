@@ -18,7 +18,7 @@ googleAnalytics = ""          # Google Analytics UA number
   adsenseSlotSticky = ""             # Enables sticky ads feature, value maybe the same with adsenseSlot, remove if you don't want display sticky ads
 
   # SEO configs
-  seotitle = "Personal website (SEO Version)"
+  seotitle = "Personal website"
   googleSiteVerification = ""    # Google Webmaster
   msValidate = ""                  # Bing Webmaster
 
@@ -35,7 +35,7 @@ googleAnalytics = ""          # Google Analytics UA number
   name = "Posts"
   weight = 1
   identifier = "posts"
-  url = "/posts/"
+  url = "/post/"
 [[menu.main]]
   name = "About"
   weight = 2
