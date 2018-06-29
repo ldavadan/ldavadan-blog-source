@@ -10,7 +10,8 @@ output: html_document
 <p>Solar irradiance is a parameter of interest for building models to predict weather parameters like temperature. That’s why we need to access to these data and prepare them to be included in the models.</p>
 <div id="get-data" class="section level1">
 <h1>Get data</h1>
-<p>To obtain solar irradiance data from Wallonia, those have been included in the AGROMET API. Then, a request can be done to load data that we want. These data are recently available on the API, from June 09th.</p>
+<p>To obtain solar irradiance data from Wallonia, those have been included in the AGROMET API from EUMETSAT website. Data that we have are DSSF (Downward Surface Shortwave Flux) with a frequency of 1 day (MDSSF) or 30 minutes (DIDSSF) and measured in W/m². Solar irradiance is computated on the ground and the spectrum band covers UV. All the informations are available <a href="https://landsaf.ipma.pt/en/products/longwave-shortwave-radiation/dssf/">here</a>.</p>
+<p>Then, a request can be done to load data that we want. These data are recently available on the API, from June 09th, because there is no history data. That is a problem at the moment because models that we want to compute will be made for prior years.</p>
 <p>The request returns a <a href="https://stackoverflow.com/questions/383692/what-is-json-and-why-would-i-use-it">JSON</a> (JavaScript Object Notation) file. This file is built on two structures : a collection of name/value pairs and an ordered list of values.</p>
 <p>The JSON file can be read on R, with the package <code>jsonlite</code> for example. It is presented like a Large List. For the project, a list is not very convenient. It is better to work with data frame.</p>
 </div>
@@ -25,6 +26,7 @@ output: html_document
 <h2>Manipulating solar irradiance data</h2>
 <p>In the case of the JSON file for solar irradiance data, I wanted to have data about the measures and their dates but also about the location of each measures. But they were stored at different locations and with different formats.</p>
 <p>The solution I used was to make loops in my code to group data. In fact, I created new columns in my data frames containing measures of solar irradiance where I put the coordinates of the stations which took measures. Then, I could create a data frame with all the hourly measures in Wallonia during a defined period.</p>
-<p>Finally, I could convert my data frame to a simple feature <code>sf</code> to observe data on a map. There are 875 points where measures are made, spread out all Wallonia.</p>
+<p>Finally, I could convert my data frame to a simple feature <code>sf</code> to observe data on a map. There are 875 points where measures are made, spread out all Wallonia. That is inadequate to build model with a high resolution. I realized a spatialization of these data to cover all Wallonia with a resolution of 1 km². But to do that, I used centroids of each 1km². It works perfectly first but the objective is to obtain a continuous spatialization. And creating a 1 km² cell from points is more difficult. The solution was to join two simple features : one is the grid with 1 km² cells and the other one is the spatialized points. Then, I get data from point and give them to polygons where points are.</p>
+<p>Now I have a grid with solar irradiance with a resolution of 1 km².</p>
 </div>
 </div>
