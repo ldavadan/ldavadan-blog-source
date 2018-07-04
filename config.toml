@@ -9,7 +9,7 @@ googleAnalytics = ""          # Google Analytics UA number
 [params]
   subtitle = "Personal website for my internship"
   author = "Loïc Davadan"
-  logo = ""
+  logo = "/img/portrait.jpg"
   description = "Logbook for my intership"
   paginate = 10
 
