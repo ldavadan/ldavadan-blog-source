@@ -23,7 +23,7 @@ In practice, most of machine learning uses supervised learning.
 
 In this learning, the algorithm tries to learn from examples we give to it and then it returns a model of prediction. Classification and regression are supervised machine learning.
 
-In the case of the AGROMET project, we want to predict the temperature from some explanatory variables like land cover or solar irradiance. To do that, we feed the algorithm with hourly data from a period long enough including temperature measured. The objective of the algorithm is to return an equation where temperature depends on some variables. The equation will have this form : $Y = a_0 + a_1.X_1 + a_2.X_2 + ... + a_n.X_n$ where $Y$ is your variable to predict and $X_n$ your $n$ explanatory variables. This equation is our model of prediction inferred by multiple linear regression.
+In the case of the AGROMET project, we want to predict the temperature from some explanatory variables like land cover or solar irradiance. To do that, we feed the algorithm with hourly data from a period long enough including temperature measured. The objective of the algorithm is to return an equation where temperature depends on some variables. The equation will have this form : $$Y = a_0 + a_1.X_1 + a_2.X_2 + ... + a_n.X_n$$ where $$Y$$ is your variable to predict and $$X_n$$ your $$n$$ explanatory variables. This equation is our model of prediction inferred by multiple linear regression.
 
 ## Unsupervised machine learning
 
@@ -39,19 +39,32 @@ Now, I will explain the approach used for the AGROMET project. The objective is 
 
 Here is our approach :
 
-We choose a weather parameter to predict, temperature for example. It is our *target*.
+We choose a weather parameter to predict, temperature for example. It is our **target**.
 
-Then, we define our explanatory variables, i.e. the parameters we want to build our model. These variables are our *task* and it contains target data.
+Then, we define our explanatory variables, i.e. the parameters we want to build our model. These variables are our **task** and it contains target data.
 
-In our case, we will use several statistical methods to build our model like kriging, multiple linear regression model or neural networks. Those which are chosen to build a model are called *learners* and will be compared.
+In our case, we will use several statistical methods to build our model like kriging, multiple linear regression model or neural networks. Those which are chosen to build a model are called **learners** and will be compared.
 
-To measure performance of our predictions, we need to use a cross-validation resampling strategy. Several methods exist but we will use the Leave-One-Out cross-validation method. It consists to establish model based on every samples except one which will be the sample where the model is tested to compute the error and then doing it again as many times as the number of samples. The error measured for our models will be the Root Mean Squared Error (RMSE).
+To measure performance of our predictions, we need to use a cross-validation resampling strategy. Several methods exist but we will use the Leave-One-Out cross-validation method. It consists to establish model based on every samples except one which will be the sample where the model is tested to compute the error and then doing it again as many times as the number of samples. The error measured for our models will be the Root Mean Squared Error (RMSE). This method is called **resample**
 
 Our spatialisation methodology is described in a scheme [here](https://pokyah.github.io/agrometeor-methodo-spatial/assets/uml_images/spatialization-methodology.svg).
 
 ## Machine learning in R
 
 The major part of our work is done on RStudio. It is a very powerful open-source software for R. Moreover, a R package is available which provides the infrastructure to run machine learning. This package [mlr](http://mlr-org.github.io/mlr/index.html) is very complete to build models, do predictions and evaluate performances.
+
+### Application in R
+
+Our first tests are done on temperature prediction.
+
+First, I prepared data to be integer in mlr. For this purpose, I joined dynamic variables (temperature and solar irradiance) on a period called from API with static variables (elevation, slope, land cover...). Then, I have all explanatory variables I want to realize a fisrt prediction of temperature.
+
+`mlr` needs to define target, tasks, learners and resample. Once that is done, I could run a *benchmark* which measures errors of computation. The result of this benchmark can be analyzed in R getting performances of each learner and making predictions of our target (here, temperature).
+
+Duration of the benchmark depends on learners you choose and size of your data. After a quick investigation, with data from a period of 1 day, 1 week and 1 month, it seems that duration is linear. Then, I can predict that a benchmark of 5 years of data with Multiple Linear Regression and LOOCV resample will take just over 13 hours. But the best result will be obtained when we are able to compare several statistical methods to choose the best. Then, the duration will be longer even if some methods are faster than Multiple Linear Regression. Indeed, nearest neighbours method is very much faster than regression. However, the tests on 1 month of data show that nearest neighbours is worse than regression.
+
+In brief, processing a large amount of data needs time.
+
 
 
 
